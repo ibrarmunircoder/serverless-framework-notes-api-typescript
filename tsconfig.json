@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "target": "ES6",
+    "lib": ["ES2022"],
+    "module": "ES2022",
+    "moduleResolution": "Bundler", // introduced in TypeScript 5.0
+    "allowSyntheticDefaultImports": true,
+    "preserveConstEnums": true,
+    "strictNullChecks": true,
+    "sourceMap": true,
+    "allowJs": true
+  }
+}

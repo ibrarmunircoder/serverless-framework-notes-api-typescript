@@ -1,0 +1,29 @@
+{
+  "name": "notes-crud-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "dotenv": "^16.4.5",
+    "esbuild": "^0.23.0",
+    "jest": "^29.7.0",
+    "serverless-iam-roles-per-function": "^3.2.0",
+    "typescript": "^5.5.3"
+  },
+  "dependencies": {
+    "@aws-sdk/client-cognito-identity-provider": "^3.614.0",
+    "@aws-sdk/client-dynamodb": "^3.609.0",
+    "@aws-sdk/credential-providers": "^3.614.0",
+    "@aws-sdk/util-dynamodb": "^3.609.0",
+    "@smithy/node-http-handler": "^3.1.1",
+    "@types/aws-lambda": "^8.10.141",
+    "aws-jwt-verify": "^4.0.1",
+    "axios": "^1.7.2"
+  }
+}

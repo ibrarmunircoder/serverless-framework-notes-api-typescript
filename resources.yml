@@ -1,0 +1,63 @@
+notesTable:
+  Type: AWS::DynamoDB::Table
+  Properties:
+    TableName: notes-${self:provider.stage}
+    BillingMode: PAY_PER_REQUEST
+    AttributeDefinitions:
+      - AttributeName: notesId
+        AttributeType: S
+    KeySchema:
+      - AttributeName: notesId
+        KeyType: HASH
+
+cognitoUserPool:
+  Type: AWS::Cognito::UserPool
+  Properties:
+    UserPoolName: MyNotesUserPool-${self:provider.stage}
+    AdminCreateUserConfig:
+      AllowAdminCreateUserOnly: False
+    AutoVerifiedAttributes:
+      - email
+    MfaConfiguration: OFF
+    UsernameAttributes:
+      - email
+    Schema:
+      - Mutable: true
+        Name: email
+        Required: true
+    UserAttributeUpdateSettings:
+      AttributesRequireVerificationBeforeUpdate:
+        - email
+
+cognitoUserPoolWebClient:
+  Type: AWS::Cognito::UserPoolClient
+  Properties:
+    ClientName: web
+    UserPoolId: !Ref cognitoUserPool
+    ExplicitAuthFlows:
+      - ALLOW_ADMIN_USER_PASSWORD_AUTH
+      - ALLOW_USER_SRP_AUTH
+      - ALLOW_REFRESH_TOKEN_AUTH
+      - ALLOW_CUSTOM_AUTH
+    GenerateSecret: false
+    ReadAttributes:
+      - email
+      - email_verified
+    WriteAttributes:
+      - email
+    RefreshTokenValidity: 1
+    TokenValidityUnits:
+      RefreshToken: days
+
+cognitoUserPoolDomain:
+  Type: AWS::Cognito::UserPoolDomain
+  Properties:
+    UserPoolId: !Ref cognitoUserPool
+    Domain: mynotesapp11122333-${self:provider.stage}
+# Application parameters
+# userPoolIdParam:
+#   Type: AWS::SSM::Parameter
+#   Properties:
+#     Name: /notes/${self:provider.stage}/userPoolId
+#     Type: String
+#     Value: !GetAtt cognitoUserPool.Arn
